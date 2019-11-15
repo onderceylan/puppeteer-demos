@@ -1,0 +1,14 @@
+.DS_Store
+node_modules
+.idea
+coverage
+.nyc_output
+.screenshots
+pptgram/*
+whatsapp/.tmp
+dark.jpg
+light.jpg
+fps.jpg
+trace.json
+tweet.pdf
+tweet.png
