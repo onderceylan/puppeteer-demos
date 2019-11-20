@@ -17,7 +17,7 @@ node fps.js
 Run tests with
 ```
 npx jest dom-snapshot.spec.js
-
+cd budget && npx jest assert-metrics.spec.js
 ```
 
 ## References in talk 
