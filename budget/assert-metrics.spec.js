@@ -39,8 +39,6 @@ const { getBudgetMetricsOfPage, getMatchedPageMetrics, getBudgetMetricByPageMetr
 
 const assertMetricsOnUrl = async (siteUrl) => {
   const page = await this.browser.newPage();
-  await page.goto(siteUrl);
-
   const protocol = await page.target().createCDPSession();
   await protocol.send('Performance.enable');
 
