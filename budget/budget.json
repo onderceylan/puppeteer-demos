@@ -1,0 +1,28 @@
+[
+  {
+    "path": "/",
+    "perfMetrics": [
+      {
+        "metric": "JSEventListeners",
+        "budget": 100
+      },
+      {
+        "metric": "Nodes",
+        "budget": 2000
+      },
+      {
+        "metric": "JSHeapUsedSize",
+        "budget": 20000000
+      }
+    ]
+  },
+  {
+    "path": "/vacatures",
+    "perfMetrics": [
+      {
+        "metric": "Resources",
+        "budget": 80
+      }
+    ]
+  }
+]
