@@ -1,0 +1,30 @@
+{
+  "name": "whatsapp-morning-hail",
+  "description": "Firebase/Google Cloud function to hail parents on WhatsApp automatically in the morning that is executed daily via scheduler! It keeps your WhatsApp session in Cloud Storage over Chrome's user data directory and sends a message to a WhatsApp group every morning with headless chrome instance using Puppeteer on a cloud function.",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase serve --only functions",
+    "shell": "firebase functions:shell",
+    "preemulate": "export GOOGLE_APPLICATION_CREDENTIALS=./secret/morning-hail-56d9123ccf2d.json",
+    "emulate": "firebase emulators:start --only functions",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "8"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^4.1.3",
+    "firebase-admin": "^8.6.0",
+    "firebase-functions": "^3.3.0",
+    "puppeteer": "^2.0.0",
+    "unzipper": "^0.10.5"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "firebase-functions-test": "^0.1.6"
+  },
+  "private": true
+}
