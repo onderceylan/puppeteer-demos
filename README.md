@@ -1,6 +1,12 @@
-# Puppeteer can automate that!
+# Puppeteer Demos
 
-All the demos that are shown in the talk can be found in this repo.
+This repo contains various demos of the concepts, ideas and experiments over puppeteer that were demonstrated as part of 2 talks of mine. You can also find references of the links which are shown during the talk.
+
+**Puppeteer can automate that**: https://www.slideshare.net/nderCeylan/puppeteer-can-automate-that
+
+**Introducing perf budgets on CI with puppeteer:** https://www.slideshare.net/nderCeylan/introducing-perf-budgets-on-ci-with-puppeteer
+
+The scripts in this repo are built for training and demonstration purposes, feel free to use them at your own risk.
 
 ## How to run scripts?
 
@@ -12,6 +18,7 @@ npm i
 Execute scripts with
 ```
 node fps.js
+cd whatsapp && node whatsapp.js
 ```
 
 Run tests with
@@ -41,6 +48,6 @@ cd budget && npx jest assert-metrics.spec.js
 * https://browserless.io
 * https://checklyhq.com
 
-## Script references
+## Script references for some of the concepts
 * https://github.com/GoogleChromeLabs/puppeteer-examples
 * https://github.com/trentmwillis/devtools-protocol-demos
