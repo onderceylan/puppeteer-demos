@@ -41,14 +41,13 @@ function listStorageFiles() {
 async function downloadUserFile(filePath) {
   const tempFilePath = path.join(os.tmpdir(), filePath);
   const bucket = admin.storage().bucket();
-  console.log(`Downloading compressed user directory to: ${tempFilePath}`);
   await bucket.file(filePath).download({ destination: tempFilePath });
   return tempFilePath;
 }
 
 function unzipUserData(filePath) {
   return new Promise((resolve, reject) => {
-    fs.createReadStream(filePath).pipe(unzipper.Extract({ path: TEMP_USER_FOLDER_PATH })).on('close', resolve);
+    fs.createReadStream(filePath).pipe(unzipper.Extract({ path: TEMP_USER_FOLDER_PATH })).on('close', resolve).on('error', reject);
   });
 }
 
