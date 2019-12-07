@@ -128,7 +128,7 @@ const executeFunction = async () => {
 
 const scheduleFnAt = (crontab) => functions
   // Because function exceeds memory limits when memory is lower than 1GB
-  .runWith({ timeoutSeconds: 300, memory: '1GB' })
+  .runWith({ timeoutSeconds: 500, memory: '1GB' })
   .region('europe-west1')
   .pubsub
     .schedule(crontab)
