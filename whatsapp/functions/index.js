@@ -9,14 +9,16 @@
  *
  * Setup
  * 1. Execute whatsapp-demo.js with `node whatsapp-demo` in parent dir and manually authenticate yourself via your mobile app, see whatsapp-demo.js L:35
- * 2. After authentication, your credentials will be saved to .tmp folder. Get into the folder and zip the contents to a file named chrome-user.zip
+ * 2. After authentication, your credentials will be saved to .tmp folder. Get into the folder and zip all the contents to a file named chrome-user.zip
+ *    !! If you are not able to see .tmp folder, you need to reveal hidden files and folders
  * 3. Upload your chrome-user.zip file to the default bucket on your Cloud Storage
  *    !! Be careful if you decide to change storage.rules, make sure this file is securely stored
  * 4. Enable Cloud Scheduler and Pub/Sub APIs on your project
- * 5. Configure crontab for scheduler by using an online generator, like https://crontab.guru/
+ *    !! https://cloud.google.com/scheduler/docs/quickstart
+ * 5. Configure crontab for scheduler by using an online generator, like https://crontab.guru/ on L:141-145
  * 6. Emulate and deploy your functions with npm scripts emulate & deploy
  *    !! When emulating, set up admin credentials for local emulation https://firebase.google.com/docs/functions/local-emulator#set_up_admin_credentials_optional and modify path on preemulate script
- *
+ *    !! To enable emulator and run functions locally https: //firebase.google.com/docs/functions/local-emulator
  * Tweet me @onderceylan if you've any questions!
  */
 
