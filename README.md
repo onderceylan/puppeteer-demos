@@ -6,6 +6,8 @@ This repo contains various demos of the concepts, ideas and experiments over pup
 
 **Introducing perf budgets on CI with puppeteer:** https://www.slideshare.net/nderCeylan/introducing-perf-budgets-on-ci-with-puppeteer
 
+> If you attended my talk, would you help me make my next one better? Please share your feedback with this form https://onderceylan.typeform.com/to/Z4SbFn. It'll only take a minute, promise :)
+
 The scripts in this repo are built for training and demonstration purposes, feel free to use them at your own risk.
 
 ## How to run scripts?
