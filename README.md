@@ -1,6 +1,6 @@
 # Puppeteer Demos
 
-This repo contains various demos of the concepts, ideas and experiments over puppeteer that were demonstrated as part of 2 talks of mine. You can also find references of the links which are shown during the talk.
+This repo contains various demos of the concepts, ideas and experiments over puppeteer that were demonstrated as part of the talks of mine. You can also find references of the links which are shown during the talk.
 
 **Puppeteer can automate that! @AmsterdamJS:** https://www.slideshare.net/nderCeylan/puppeteer-can-automate-that-amsterdamjs
 
