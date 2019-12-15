@@ -1,10 +1,14 @@
 # Puppeteer Demos
 
-This repo contains various demos of the concepts, ideas and experiments over puppeteer that were demonstrated as part of 2 talks of mine. You can also find references of the links which are shown during the talk.
+This repo contains various demos of the concepts, ideas and experiments over puppeteer that were demonstrated as part of the talks of mine. You can also find references of the links which are shown during the talk.
 
-**Puppeteer can automate that**: https://www.slideshare.net/nderCeylan/puppeteer-can-automate-that
+**Puppeteer can automate that! @AmsterdamJS:** https://www.slideshare.net/nderCeylan/puppeteer-can-automate-that-amsterdamjs
 
-**Introducing perf budgets on CI with puppeteer:** https://www.slideshare.net/nderCeylan/introducing-perf-budgets-on-ci-with-puppeteer
+**Puppeteer can automate that! @Frontmania:** https://www.slideshare.net/nderCeylan/puppeteer-can-automate-that
+
+**Introducing perf budgets on CI with puppeteer @perf.now():** https://www.slideshare.net/nderCeylan/introducing-perf-budgets-on-ci-with-puppeteer
+
+> If you attended my talk, would you help me make my next one better? Please share your feedback with this form https://onderceylan.typeform.com/to/Z4SbFn. It'll only take a minute, promise :)
 
 The scripts in this repo are built for training and demonstration purposes, feel free to use them at your own risk.
 
