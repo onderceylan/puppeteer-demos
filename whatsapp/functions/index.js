@@ -99,16 +99,54 @@ async function sendMessage() {
   // Whatsapp web tries to detect headless chrome so faking the user agent is necessary
   await page.setUserAgent(USER_AGENT);
   await page.goto('https://web.whatsapp.com/', { waitUntil: 'networkidle0', timeout: 0 });
-  await page.waitForSelector('#side input[type=text]', { timeout: 15000 });
-  await page.type('#side input[type=text]', GROUP_NAME);
-  await page.waitForSelector(`#pane-side span[title="${GROUP_NAME}"]`, { visible: true });
-  await page.click(`span[title="${GROUP_NAME}"`);
-  await page.waitForSelector('footer .copyable-text', { visible: true });
-  await page.type('footer .copyable-text', todaysMessage);
-  await page.keyboard.press('Enter');
-  await page.waitFor(1000);
-  await page.close();
-  await browser.close();
+
+  // WhatsApp might show "Use here" prompt if you keep your session elsewhere
+  page
+    .waitForXPath('//div[@role="button"][text()="Use Here"]', { timeout: 0 })
+    .then(async (button) => {
+      console.log(`"Use here" button is shown`);
+      console.log(`Clicking`);
+      return await button.click();
+    }).catch();
+
+  // Session might be expired
+  page
+    .waitForXPath('//div[@role="button"][text()="Click to reload QR code"]', { timeout: 0 })
+    .then(async (button) => {
+      console.log(`"Click to reload QR" prompt is shown`);
+      console.log(`Clicking`);
+      return await button.click();
+    }).catch();
+
+  // Log the QR if session is expired
+  page
+    .waitForXPath('//img[@alt="Scan me!"]', { timeout: 0 })
+    .then(async (img) => {
+      console.log('QR prompt is shown');
+      const qrSrc = await img.getProperty('src');
+      console.log('Logging QR code', qrSrc);
+      return qrSrc;
+    }).catch();
+
+  try {
+    await page.waitForSelector('#side input[type=text]');
+    await page.type('#side input[type=text]', GROUP_NAME);
+    await page.waitForSelector(`#pane-side span[title="${GROUP_NAME}"]`, { visible: true });
+    await page.click(`span[title="${GROUP_NAME}"`);
+    await page.waitForSelector('footer .copyable-text', { visible: true });
+    await page.type('footer .copyable-text', todaysMessage);
+    await page.keyboard.press('Enter');
+    await page.waitFor(1000);
+    await page.close();
+    await browser.close();
+  } catch (e) {
+    console.error(`There was an error on automated flow`);
+    const screen = await page.screenshot({ encoding: 'base64' });
+    const dom = await page.content();
+    console.log('Logging screenshot', screen);
+    console.log('Logging DOM', dom);
+    throw e;
+  }
 
   return todaysMessage;
 }
@@ -133,12 +171,16 @@ const scheduleFnAt = (crontab) => functions
   .pubsub
     .schedule(crontab)
     .timeZone('Europe/Amsterdam')
-    .retryConfig({ retryCount: 3 })
     .onRun(executeFunction);
 
 // TODO: find a way to programmatically randomize crontab on Google Cloud scheduler
 // Schedule the function execution at 07:30 on every day-of-week from Monday through Friday
-exports.morningHailOnWeekdays = scheduleFnAt('30 7 * * 1-5');
+exports.morningHailOnWeekdays1 = scheduleFnAt('44 7 * * 1');
+exports.morningHailOnWeekdays2 = scheduleFnAt('10 8 * * 2');
+exports.morningHailOnWeekdays3 = scheduleFnAt('52 7 * * 3');
+exports.morningHailOnWeekdays4 = scheduleFnAt('15 8 * * 4');
+exports.morningHailOnWeekdays5 = scheduleFnAt('38 8 * * 5');
 // Schedule the function execution at 10:30 on Sunday and Saturday
 // Because we've a slightly different routine on weekends
-exports.morningHailOnWeekends = scheduleFnAt('30 10 * * 0,6');
+exports.morningHailOnWeekends1 = scheduleFnAt('44 10 * * 6');
+exports.morningHailOnWeekends2 = scheduleFnAt('27 11 * * 0');
