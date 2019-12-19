@@ -8,7 +8,7 @@
  * Although I use it personally on my personal cloud environment, I need to warn you to use it at your own risk!
  *
  * Setup
- * 1. Execute whatsapp-demo.js with `node whatsapp-demo` in parent dir and manually authenticate yourself via your mobile app, see whatsapp-demo.js L:35
+ * 1. Execute whatsapp-demo.js with `node whatsapp-demo` in parent dir and manually authenticate yourself via your mobile app, qr.png image will be saved
  * 2. After authentication, your credentials will be saved to .tmp folder. Get into the folder and zip all the contents to a file named chrome-user.zip
  *    !! If you are not able to see .tmp folder, you need to reveal hidden files and folders
  * 3. Upload your chrome-user.zip file to the default bucket on your Cloud Storage
@@ -29,11 +29,11 @@ const path = require('path');
 const fs = require('fs');
 const unzipper = require('unzipper');
 const puppeteer = require('puppeteer');
+const { getTodaysMessage, sendMessageToGroup } = require('./helpers');
 admin.initializeApp();
 
 const USER_FOLDER_NAME = 'chrome-user';
 const TEMP_USER_FOLDER_PATH = path.resolve(os.tmpdir(), USER_FOLDER_NAME);
-const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3641.0 Safari/537.36';
 const GROUP_NAME = 'Bizimkiler';
 
 function listStorageFiles() {
@@ -53,42 +53,6 @@ function unzipUserData(filePath) {
   });
 }
 
-function getTodaysMessage() {
-  const getRandomElem = (array) => array[Math.floor(Math.random() * array.length)];
-  const getRandomEmoji = () => {
-    const emojis = ['😘', '😙', '😘', '👋', '🤗'];
-    return getRandomElem(emojis);
-  };
-  const messages = [
-    `Gunaydın herkese güzel bir gün olsun öpüyorum ${getRandomEmoji()}`,
-    `Gunaydın ailem, herkese güzel bir gün olsun öpüyore ${getRandomEmoji()}`,
-    `Gunaydın canım ailem, keyifli bir gün olsun öpüyorum ${getRandomEmoji()}`,
-  ];
-  const fridayMessage = `Gunaydın herkese hayırlı cumalar öpüyorum ${getRandomEmoji()}`;
-
-  let date = new Date();
-  let day = date.getDay();
-  const isFriday = day === 5;
-  const isSaturday = day === 6;
-  const isSunday = day === 0;
-
-  // Randomizing the message a bit so my mum doesn't suspect automation
-  const randomMessage = getRandomElem(messages);
-
-  if (isFriday) {
-    // Because Friday is a sacred day for my parents, message changes a bit
-    return fridayMessage;
-  } else if (isSaturday) {
-    // Because we like to hail the weekend on saturday mornings, yay!
-    return randomMessage.replace('gün', 'haftasonu');
-  } else if (isSunday) {
-    // Because we enjoy stressing it's Sunday :)
-    return randomMessage.replace('gün', 'pazar');
-  }
-
-  return randomMessage;
-}
-
 async function sendMessage() {
   const todaysMessage = getTodaysMessage();
 
@@ -96,56 +60,12 @@ async function sendMessage() {
   // --no-sandbox because fails otherwise with "Running as root without —-no-sandbox is not supported."
   const browser = await puppeteer.launch({ headless: true, args: [`--user-data-dir=${TEMP_USER_FOLDER_PATH}`, '--no-sandbox'] });
   const page = await browser.newPage();
-  // Whatsapp web tries to detect headless chrome so faking the user agent is necessary
-  await page.setUserAgent(USER_AGENT);
-  await page.goto('https://web.whatsapp.com/', { waitUntil: 'networkidle0', timeout: 0 });
-
-  // WhatsApp might show "Use here" prompt if you keep your session elsewhere
-  page
-    .waitForXPath('//div[@role="button"][text()="Use Here"]', { timeout: 0 })
-    .then(async (button) => {
-      console.log(`"Use here" button is shown`);
-      console.log(`Clicking`);
-      return await button.click();
-    }).catch();
-
-  // Session might be expired
-  page
-    .waitForXPath('//div[@role="button"][text()="Click to reload QR code"]', { timeout: 0 })
-    .then(async (button) => {
-      console.log(`"Click to reload QR" prompt is shown`);
-      console.log(`Clicking`);
-      return await button.click();
-    }).catch();
-
-  // Log the QR if session is expired
-  page
-    .waitForXPath('//img[@alt="Scan me!"]', { timeout: 0 })
-    .then(async (img) => {
-      console.log('QR prompt is shown');
-      const qrSrc = await img.getProperty('src');
-      console.log('Logging QR code', qrSrc);
-      return qrSrc;
-    }).catch();
 
   try {
-    await page.waitForSelector('#side input[type=text]');
-    await page.type('#side input[type=text]', GROUP_NAME);
-    await page.waitForSelector(`#pane-side span[title="${GROUP_NAME}"]`, { visible: true });
-    await page.click(`span[title="${GROUP_NAME}"`);
-    await page.waitForSelector('footer .copyable-text', { visible: true });
-    await page.type('footer .copyable-text', todaysMessage);
-    await page.keyboard.press('Enter');
-    await page.waitFor(1000);
+    await sendMessageToGroup(page, todaysMessage, GROUP_NAME);
+  } finally {
     await page.close();
     await browser.close();
-  } catch (e) {
-    console.error(`There was an error on automated flow`);
-    const screen = await page.screenshot({ encoding: 'base64' });
-    const dom = await page.content();
-    console.log('Logging screenshot', screen);
-    console.log('Logging DOM', dom);
-    throw e;
   }
 
   return todaysMessage;
@@ -158,10 +78,8 @@ const executeFunction = async () => {
   const tempFilePath = await downloadUserFile(userProfileFile.name);
 
   await unzipUserData(tempFilePath);
-  const sentMessage = await sendMessage();
 
-  console.log(`Message "${sentMessage}" sent to group "${GROUP_NAME}"`);
-  return sentMessage;
+  return sendMessage();
 };
 
 const scheduleFnAt = (crontab) => functions
