@@ -92,13 +92,10 @@ const scheduleFnAt = (crontab) => functions
     .onRun(executeFunction);
 
 // TODO: find a way to programmatically randomize crontab on Google Cloud scheduler
-// Schedule the function execution at 07:30 on every day-of-week from Monday through Friday
 exports.morningHailOnWeekdays1 = scheduleFnAt('44 7 * * 1');
 exports.morningHailOnWeekdays2 = scheduleFnAt('10 8 * * 2');
 exports.morningHailOnWeekdays3 = scheduleFnAt('52 7 * * 3');
 exports.morningHailOnWeekdays4 = scheduleFnAt('15 8 * * 4');
 exports.morningHailOnWeekdays5 = scheduleFnAt('38 8 * * 5');
-// Schedule the function execution at 10:30 on Sunday and Saturday
-// Because we've a slightly different routine on weekends
 exports.morningHailOnWeekends1 = scheduleFnAt('44 10 * * 6');
 exports.morningHailOnWeekends2 = scheduleFnAt('27 11 * * 0');
