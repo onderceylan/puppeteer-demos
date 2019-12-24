@@ -1,39 +1,42 @@
 const getRandomElem = (array) => array[Math.floor(Math.random() * array.length)];
 
 const getRandomEmoji = () => {
-  const emojis = ['😘', '😙', '😘', '👋', '🤗'];
+  const emojis = ['😘', '😙', '👋', '🤗', '🥰', '🤓', '🤩'];
   return getRandomElem(emojis);
 };
 
 const getTodaysMessage = () => {
-  const messages = [
-    `Gunaydın herkese güzel bir gün olsun öpüyorum ${getRandomEmoji()}`,
-    `Gunaydın ailem, herkese güzel bir gün olsun öpüyore ${getRandomEmoji()}`,
-    `Gunaydın canım ailem, keyifli bir gün olsun öpüyorum ${getRandomEmoji()}`,
-  ];
-  const fridayMessage = `Gunaydın herkese hayırlı cumalar öpüyorum ${getRandomEmoji()}`;
+  const awesomeWishes = ['güzel', 'şahane', 'keyifli', 'huzurlu', 'harika'];
+  const weekendWishes = [ ...awesomeWishes, 'eğlenceli', 'bol dinlenmeli', 'bol gezmeli'];
+  const weekDayWishes = [ ...awesomeWishes, 'bereketli', 'başarılı', 'verimli', 'sağlıklı'];
+  const kisses = ['öpüyorum', 'öpüldünüz', 'öpüyore', 'öptüm'];
+  const hails = ['Gunaydın', 'Gününüz aydın', 'Günaydınlar'];
+  const address = ['sevgili ailem', 'canım ailem', 'ceylanos', 'canlar'];
+  const who = ['', ' herkese'];
+  const comma = ['', ','];
 
   let date = new Date();
   let day = date.getDay();
-  const isFriday = day === 5;
-  const isSaturday = day === 6;
-  const isSunday = day === 0;
 
-  // Randomizing the message a bit so my mum doesn't suspect automation
-  const randomMessage = getRandomElem(messages);
+  // Randomizing the message a bit so my mom doesn't suspect automation
+  const randomMessage = `${getRandomElem(hails)} ${getRandomElem(address)}${getRandomElem(comma)}${getRandomElem(who)} :wish: bir gün olsun ${getRandomElem(kisses)} ${getRandomEmoji()}`;
 
-  if (isFriday) {
-    // Because Friday is a sacred day for my parents, message changes a bit
-    return fridayMessage;
-  } else if (isSaturday) {
-    // Because we like to hail the weekend on saturday mornings, yay!
-    return randomMessage.replace('gün', 'haftasonu');
-  } else if (isSunday) {
-    // Because we enjoy stressing it's Sunday :)
-    return randomMessage.replace('gün', 'pazar');
+  switch (day) {
+    case 5:
+      // Because Friday is a sacred day for my parents, message changes a bit
+      return randomMessage.replace(':wish: bir gün olsun', 'hayırlı cumalar');
+    case 6:
+      // Because we like to hail the weekend on saturday mornings, yay!
+      return randomMessage.replace(':wish:', getRandomElem(weekendWishes)).replace('gün', 'haftasonu');
+    case 0:
+      // Because we enjoy stressing it's Sunday :)
+      return randomMessage.replace(':wish:', getRandomElem(weekendWishes)).replace('gün', 'pazar');
+    case 1:
+      // Because we enjoy stressing it's the week start
+      return randomMessage.replace(':wish:', getRandomElem(weekDayWishes)).replace('gün', 'hafta');
+    default:
+      return randomMessage.replace(':wish:', getRandomElem(weekDayWishes));
   }
-
-  return randomMessage;
 };
 
 // Checks if session is expired and qr code is shown
