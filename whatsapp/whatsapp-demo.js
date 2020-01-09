@@ -5,7 +5,7 @@ const { getTodaysMessage, sendMessageToGroup } = require('./functions/helpers');
 
 try {
   const path = require('path');
-  const browser = await puppeteer.launch({ headless: true, args: [`--user-data-dir=${path.resolve(__dirname, '.tmp')}`] });
+  const browser = await puppeteer.launch({ headless: false, args: [`--user-data-dir=${path.resolve(__dirname, '.tmp')}`] });
   const page = await browser.newPage();
 
   try {
