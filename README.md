@@ -2,6 +2,8 @@
 
 This repo contains various demos of the concepts, ideas and experiments over puppeteer that were demonstrated as part of the talks of mine. You can also find references of the links which are shown during the talk.
 
+🎥 Video of the talk : https://www.youtube.com/watch?v=d2WSO3w5E94
+
 **Puppeteer can automate that! @AmsterdamJS:** https://www.slideshare.net/nderCeylan/puppeteer-can-automate-that-amsterdamjs
 
 **Puppeteer can automate that! @Frontmania:** https://www.slideshare.net/nderCeylan/puppeteer-can-automate-that
