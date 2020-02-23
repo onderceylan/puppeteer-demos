@@ -23,37 +23,19 @@
  */
 
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const os = require('os');
-const path = require('path');
-const fs = require('fs');
-const unzipper = require('unzipper');
 const puppeteer = require('puppeteer');
-const { getTodaysMessage, sendMessageToGroup } = require('./helpers');
-admin.initializeApp();
+const {
+  getTodaysMessage,
+  sendMessageToGroup,
+  listStorageFiles,
+  downloadUserFile,
+  unzipUserData,
+  TEMP_USER_FOLDER_PATH,
+  USER_FOLDER_NAME } = require('./helpers');
 
-const USER_FOLDER_NAME = 'chrome-user';
-const TEMP_USER_FOLDER_PATH = path.resolve(os.tmpdir(), USER_FOLDER_NAME);
 const GROUP_NAME = 'Bizimkiler';
 
-function listStorageFiles() {
-  return admin.storage().bucket().getFiles();
-}
-
-async function downloadUserFile(filePath) {
-  const tempFilePath = path.join(os.tmpdir(), filePath);
-  const bucket = admin.storage().bucket();
-  await bucket.file(filePath).download({ destination: tempFilePath });
-  return tempFilePath;
-}
-
-function unzipUserData(filePath) {
-  return new Promise((resolve, reject) => {
-    fs.createReadStream(filePath).pipe(unzipper.Extract({ path: TEMP_USER_FOLDER_PATH })).on('close', resolve).on('error', reject);
-  });
-}
-
-async function sendMessage() {
+sendMessage = async () => {
   const todaysMessage = getTodaysMessage();
 
   // --user-data-dir not as option but as launch arg because https://github.com/puppeteer/puppeteer/issues/921#issuecomment-561054884
@@ -69,9 +51,9 @@ async function sendMessage() {
   }
 
   return todaysMessage;
-}
+};
 
-const executeFunction = async () => {
+executeFunction = async () => {
 
   const [filesInStorage] = await listStorageFiles();
   const userProfileFile = filesInStorage.find(file => file.name.includes(USER_FOLDER_NAME));

@@ -1,3 +1,36 @@
+const admin = require('firebase-admin');
+const unzipper = require('unzipper');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const USER_FOLDER_NAME = 'chrome-user';
+const TEMP_USER_FOLDER_PATH = path.resolve(os.tmpdir(), USER_FOLDER_NAME);
+
+admin.initializeApp();
+
+const listStorageFiles = () =>  {
+  return admin.storage().bucket().getFiles();
+};
+
+const downloadUserFile = async (filePath) => {
+  const tempFilePath = path.join(os.tmpdir(), filePath);
+  const bucket = admin.storage().bucket();
+  await bucket.file(filePath).download({ destination: tempFilePath });
+  return tempFilePath;
+};
+
+const saveFileToStorage = (filePath, data, options = null) => {
+  // const tempFilePath = path.join(os.tmpdir(), filePath);
+  const bucket = admin.storage().bucket();
+  return bucket.file(filePath).save(data, options);
+};
+
+const unzipUserData = async (filePath) => {
+  return new Promise((resolve, reject) => {
+    fs.createReadStream(filePath).pipe(unzipper.Extract({ path: TEMP_USER_FOLDER_PATH })).on('close', resolve).on('error', reject);
+  });
+};
+
 const getRandomElem = (array) => array[Math.floor(Math.random() * array.length)];
 
 const getRandomEmoji = () => {
@@ -107,9 +140,11 @@ const sendMessageToGroup = async (page, message, groupName) => {
     console.log(`Message "${message}" sent to group "${groupName}"`);
   } catch (e) {
     console.error(`There was an error on automated flow`);
-    const screen = await page.screenshot({ encoding: 'base64' });
+    const screen = await page.screenshot();
     const dom = await page.content();
-    console.log('Logging screenshot', screen);
+    await saveFileToStorage('screen.png', screen, { contentType: 'image/png' });
+    await saveFileToStorage('dom.html', dom, { contentType: 'text/html' });
+    console.log('Logging screenshot');
     console.log('Logging DOM', dom);
     throw e;
   }
@@ -118,4 +153,10 @@ const sendMessageToGroup = async (page, message, groupName) => {
 module.exports = {
   getTodaysMessage,
   sendMessageToGroup,
+  listStorageFiles,
+  downloadUserFile,
+  saveFileToStorage,
+  unzipUserData,
+  USER_FOLDER_NAME,
+  TEMP_USER_FOLDER_PATH
 };
