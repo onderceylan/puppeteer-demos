@@ -75,15 +75,17 @@ const getTodaysMessage = () => {
 // Checks if session is expired and qr code is shown
 // Saves qr code as qr.png image and logs it to console as base64 encoded string
 const checkSessionValidityAndSaveQR = async (page) => {
-  const qrImgEl = await page.$x('//img[@alt="Scan me!"]');
+  const qrImgEl = await page.$x('//canvas[@aria-label="Scan me!"]');
 
   if (qrImgEl.length > 0) {
     const img = qrImgEl[0];
-    console.log('Saved QR code as qr.png');
-    await img.screenshot({ path: 'qr.png' });
-    const qrSrc = await img.evaluate((el) => el.src);
-    console.log('Logging QR code', qrSrc);
-    throw new Error('Session is expired, QR code is logged');
+    try {
+      await img.screenshot({ path: 'qr.png' });
+      console.log('Saved QR code as qr.png');
+    } catch (e) {
+      console.log(`Won't save the QR code, authenticate again`);
+    }
+    throw new Error('Session is expired, need to authenticate again');
   }
 };
 
@@ -118,7 +120,7 @@ const waitForAppLoad = async (page) => {
   await page.waitFor(1000);
 };
 
-const sendMessageToGroup = async (page, message, groupName) => {
+const sendMessageToGroup = async (page, message, groupName, dryRun = false) => {
   const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3641.0 Safari/537.36';
   try {
     // WhatsApp web tries to detect headless chrome so faking the user agent is necessary
@@ -135,17 +137,19 @@ const sendMessageToGroup = async (page, message, groupName) => {
     await page.click(`span[title="${groupName}"`);
     await page.waitForSelector('footer .copyable-text', { visible: true });
     await page.type('footer .copyable-text', message);
-    await page.keyboard.press('Enter');
+    if (!dryRun) {
+      await page.keyboard.press('Enter');
+    }
     await page.waitFor(1000);
     console.log(`Message "${message}" sent to group "${groupName}"`);
   } catch (e) {
     console.error(`There was an error on automated flow`);
-    const screen = await page.screenshot();
+    const screen = await page.screenshot({ fullPage: true });
     const dom = await page.content();
     await saveFileToStorage('screen.png', screen, { contentType: 'image/png' });
     await saveFileToStorage('dom.html', dom, { contentType: 'text/html' });
-    console.log('Logging screenshot');
-    console.log('Logging DOM', dom);
+    console.log('Saved screenshot to the storage');
+    console.log('Saved DOM to the storage');
     throw e;
   }
 };
