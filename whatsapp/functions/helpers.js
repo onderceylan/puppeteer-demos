@@ -137,7 +137,7 @@ const sendMessageToGroup = async (page, message, groupName, dryRun = false) => {
     await page.click(`span[title="${groupName}"`);
     await page.waitForSelector('footer .copyable-text', { visible: true });
     await page.type('footer .copyable-text', message);
-    if (!dryRun) {
+    if (dryRun === false) {
       await page.keyboard.press('Enter');
     }
     await page.waitFor(1000);
