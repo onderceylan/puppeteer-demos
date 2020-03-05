@@ -131,8 +131,8 @@ const sendMessageToGroup = async (page, message, groupName, dryRun = false) => {
     await waitForAppLoad(page);
     await checkSessionValidityAndSaveQR(page);
 
-    await page.waitForSelector('#side input[type=text]');
-    await page.type('#side input[type=text]', groupName);
+    await page.waitForSelector('#side div[contenteditable="true"]');
+    await page.type('#side div[contenteditable="true"]', groupName);
     await page.waitForSelector(`#pane-side span[title="${groupName}"]`, { visible: true });
     await page.click(`span[title="${groupName}"`);
     await page.waitForSelector('footer .copyable-text', { visible: true });
