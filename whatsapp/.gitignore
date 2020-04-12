@@ -63,3 +63,6 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+qr.png
+chrome-user.zip
