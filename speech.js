@@ -31,7 +31,7 @@ const argv = require('yargs').argv;
 const puppeteer = require('puppeteer');
 
 const DEFAULT_TXT = 'Hello there, my name is Puppeteer. I am controlling your browser.';
-const DEFAULT_VOICE = 'Alex';
+const DEFAULT_VOICE = 'Milena';
 
 const executablePath = process.env.CHROME_PATH ||
     '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome';
