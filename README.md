@@ -4,6 +4,8 @@ This repo contains various demos of the concepts, ideas and experiments over pup
 
 🎥 Video of the talk : https://www.youtube.com/watch?v=d2WSO3w5E94
 
+**Puppeteer can automate that! @HolyJS:** https://www.slideshare.net/nderCeylan/puppeteer-can-automate-that-holyjs-piter-2020
+
 **Puppeteer can automate that! @AmsterdamJS:** https://www.slideshare.net/nderCeylan/puppeteer-can-automate-that-amsterdamjs
 
 **Puppeteer can automate that! @Frontmania:** https://www.slideshare.net/nderCeylan/puppeteer-can-automate-that
