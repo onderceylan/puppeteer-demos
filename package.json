@@ -16,8 +16,8 @@
     "nyc": "^15.0.0",
     "puppeteer": "^2.0.0",
     "puppeteer-core": "^2.0.0",
-    "puppeteer-to-istanbul": "^1.2.2",
+    "puppeteer-to-istanbul": "^1.4.0",
     "superstatic": "^6.0.4",
-    "yargs": "^14.2.0"
+    "yargs": "^16.0.3"
   }
 }
