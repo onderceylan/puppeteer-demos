@@ -11,8 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "chrome-launcher": "^0.13.1",
-    "jest": "^25.2.2",
+    "jest": "^25.5.4",
     "looks-same": "^7.2.1",
+    "node-notifier": "^9.0.0",
     "nyc": "^15.0.0",
     "puppeteer": "^2.0.0",
     "puppeteer-core": "^2.0.0",
