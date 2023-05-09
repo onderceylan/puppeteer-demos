@@ -44,15 +44,17 @@ const searchable = process.argv.includes('--searchable');
 
 (async() => {
 
-const browser = await puppeteer.launch();
+const browser = await puppeteer.launch({headless: false});
 
 const page = await browser.newPage();
 await page.setViewport({width: 1200, height: 1000, deviceScaleFactor: 2});
-await page.goto(`https://twitter.com/${username}/status/1272513229617496064`);
+await page.goto(`https://twitter.com/${username}/status/1648736108304297985`);
 
-await page.waitForSelector('article', {visible: true});
+await page.waitForSelector('[data-testid="tweet"]', {visible: true});
 
-const overlay = await page.$('article');
+await page.$eval('#layers', el => el.remove());
+
+const overlay = await page.$('[data-testid="tweet"]');
 const screenshot = await overlay.screenshot({path: 'tweet.png'});
 
 await page.setContent(`
