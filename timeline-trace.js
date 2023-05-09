@@ -12,7 +12,7 @@ const puppeteer = require('puppeteer');
 
     await page.tracing.start({ path: 'trace.json' });
     await page.goto('https://www.google.com');
-    await page.waitFor(2000);
+    await page.waitForTimeout(2000);
     await page.tracing.stop();
 
     await page.close();

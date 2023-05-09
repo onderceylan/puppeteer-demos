@@ -7,10 +7,10 @@ const puppeteer = require('puppeteer');
 
   await page.goto('https://googlechromelabs.github.io/dark-mode-toggle/demo/index.html');
   await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'light' }]);
-  await page.waitFor(200);
+  await page.waitForTimeout(200);
   await page.screenshot({ path: 'light.jpg', type: 'jpeg', omitBackground: true });
   await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }]);
-  await page.waitFor(200);
+  await page.waitForTimeout(200);
   await page.screenshot({ path: 'dark.jpg', type: 'jpeg', omitBackground: true });
   await browser.close();
 })();

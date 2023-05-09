@@ -5,7 +5,7 @@ test('regression testing page dom snapshot', async() => {
 
     const page = await browser.newPage();
 
-    await page.goto('https://www.linkit.nl/');
+    await page.goto('https://pptr.dev');
 
     expect(await page.content()).toMatchSnapshot();
 

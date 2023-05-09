@@ -12,7 +12,7 @@ afterAll(async () => {
 
 test('asserts memory leak by heap on the main page', async() => {
   const page = await this.browser.newPage();
-  await page.goto('https://www.linkit.nl');
+  await page.goto('https://pptr.dev');
 
 
   const protocol = await page.target().createCDPSession();
@@ -30,7 +30,7 @@ test('asserts memory leak by heap on the main page', async() => {
   });
 
   // Or just keep your app open for a certain amoun of time
-  await page.waitFor(5000);
+  await page.waitForTimeout(5000);
 
   await protocol.send('HeapProfiler.collectGarbage');
 

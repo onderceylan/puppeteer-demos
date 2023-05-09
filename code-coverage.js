@@ -10,7 +10,7 @@ const pti = require('puppeteer-to-istanbul');
 
   await page.coverage.startJSCoverage();
 
-  await page.goto('https://www.linkit.nl/');
+  await page.goto('https://pptr.dev');
 
   const jsCoverage = await page.coverage.stopJSCoverage();
   pti.write(jsCoverage);

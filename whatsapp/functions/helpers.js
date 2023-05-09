@@ -117,7 +117,7 @@ const forcefullyCaptureSession = async (page) => {
 const waitForAppLoad = async (page) => {
   // WhatsApp has it's own loading mechanism detached from native page load events
   await page.waitForSelector('#startup', { hidden: true });
-  await page.waitFor(1000);
+  await page.waitForTimeout(1000);
 };
 
 const sendMessageToGroup = async (page, message, groupName, dryRun = false) => {
@@ -140,7 +140,7 @@ const sendMessageToGroup = async (page, message, groupName, dryRun = false) => {
     if (dryRun === false) {
       await page.keyboard.press('Enter');
     }
-    await page.waitFor(1000);
+    await page.waitForTimeout(1000);
     console.log(`Message "${message}" sent to group "${groupName}"`);
   } catch (e) {
     console.error(`There was an error on automated flow`);

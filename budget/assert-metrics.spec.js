@@ -64,9 +64,9 @@ afterAll(async () => {
 });
 
 test('asserts budget performance metrics on the main page', async() => {
-  await assertMetricsOnUrl('https://www.linkit.nl/');
+  await assertMetricsOnUrl('https://pptr.dev');
 }, 30000);
 
-test('asserts budget performance metrics on vacatures page', async() => {
-  await assertMetricsOnUrl('https://www.linkit.nl/vacatures');
+test('asserts budget performance metrics on api page', async() => {
+  await assertMetricsOnUrl('https://pptr.dev/api');
 }, 30000);

@@ -12,7 +12,7 @@ afterAll(async () => {
 
 test('asserts memory leak by prototype on the main page', async() => {
   const page = await this.browser.newPage();
-  await page.goto('https://www.linkit.nl');
+  await page.goto('https://pptr.dev');
 
   // Get a handle to the Map object prototype
   const mapPrototype = await page.evaluateHandle(() => Map.prototype);

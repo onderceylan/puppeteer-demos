@@ -30,7 +30,7 @@
 
 const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors');
-const nexus5X = devices['Nexus 5X'];
+const iphone6 = puppeteer.KnownDevices['iPhone 6'];
 
 const argv = require('yargs')
   .options({
@@ -110,7 +110,7 @@ async function launch(position, screen) {
 
   const page = await browser.newPage();
   if (MOBILE) {
-    await page.emulate(nexus5X);
+    await page.emulate(iphone6);
   } else {
     await page.setViewport(DEFAULT_VIEWPORT);
   }
@@ -141,8 +141,8 @@ async function launch(position, screen) {
   await browser.close();
 
 // Take up full desktop space or emulate mobile.
-  DEFAULT_VIEWPORT.width = MOBILE ? nexus5X.viewport.width : Math.floor(screen.width / urls.length);
-  DEFAULT_VIEWPORT.height = MOBILE ? nexus5X.viewport.height : screen.height;
+  DEFAULT_VIEWPORT.width = MOBILE ? iphone6.viewport.width : Math.floor(screen.width / urls.length);
+  DEFAULT_VIEWPORT.height = MOBILE ? iphone6.viewport.height : screen.height;
 
   const pages = await Promise.all(urls.map((url, i) => launch(i, screen)));
 

@@ -7,7 +7,7 @@ const puppeteer = require('puppeteer');
   const page = await browser.newPage();
   const protocol = await page.target().createCDPSession();
   await protocol.send('Overlay.setShowFPSCounter', { show: true });
-  await page.goto('https://www.linkit.nl');
+  await page.goto('https://pptr.dev');
 
   // Do graphical regressions here by interacting with the page
   await protocol.send('Input.synthesizeScrollGesture', {

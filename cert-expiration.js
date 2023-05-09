@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
-  const siteUrl = 'https://www.linkit.nl/';
+  const siteUrl = 'https://pptr.dev';
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 

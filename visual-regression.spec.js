@@ -39,7 +39,7 @@ afterAll(async () => {
 
 test('asserts visual regression on the main page', async() => {
   const page = await this.browser.newPage();
-  await page.goto('https://www.linkit.nl');
+  await page.goto('https://pptr.dev');
 
   expect(await takeScreenshot(page, 'main-page.1')).toBeTruthy();
 
