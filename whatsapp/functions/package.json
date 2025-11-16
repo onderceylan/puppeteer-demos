@@ -22,7 +22,7 @@
     "unzipper": "^0.10.10"
   },
   "devDependencies": {
-    "eslint": "5.16.0",
+    "eslint": "9.39.1",
     "eslint-plugin-promise": "^4.0.1",
     "firebase-functions-test": "^0.1.6"
   },
