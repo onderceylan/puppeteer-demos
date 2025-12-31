@@ -12,13 +12,13 @@
   "dependencies": {
     "@d-lab/discord-puppet": "^0.6.4",
     "chrome-launcher": "^0.13.1",
-    "jest": "^25.5.4",
+    "jest": "^30.2.0",
     "looks-same": "^7.2.1",
     "node-notifier": "^9.0.0",
     "nyc": "^15.0.0",
     "puppeteer": "^20.1.2",
     "puppeteer-to-istanbul": "^1.4.0",
-    "superstatic": "^6.0.4",
+    "superstatic": "^10.0.0",
     "yargs": "^16.0.3"
   }
 }
